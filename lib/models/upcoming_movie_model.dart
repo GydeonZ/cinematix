@@ -1,24 +1,22 @@
 import 'dart:convert';
 
-NowPlayingMovie nowPlayingMovieFromJson(Map<String, dynamic> map) =>
-    NowPlayingMovie.fromJson(map);
+UpcomingMovie upcomingMovieFromJson(Map<String, dynamic> map) =>
+    UpcomingMovie.fromJson(map);
 
-String nowPlayingMovieToJson(NowPlayingMovie data) =>
-    json.encode(data.toJson());
+String upcomingMovieToJson(UpcomingMovie data) => json.encode(data.toJson());
 
-class NowPlayingMovie {
+class UpcomingMovie {
   final bool success;
   final Error error;
   final List<Result> results;
 
-  NowPlayingMovie({
+  UpcomingMovie({
     required this.success,
     required this.error,
     required this.results,
   });
 
-  factory NowPlayingMovie.fromJson(Map<String, dynamic> json) =>
-      NowPlayingMovie(
+  factory UpcomingMovie.fromJson(Map<String, dynamic> json) => UpcomingMovie(
         success: json["success"],
         error: Error.fromJson(json["error"]),
         results:
@@ -82,14 +80,14 @@ class Result {
   final List<GenreId> genreIds;
   final int duration;
   final String posterPath;
-  final String ageCategory;
+  final AgeCategory ageCategory;
   final String trailerPath;
   final String trailerThumbnailPath;
   final String producer;
   final String director;
   final int presaleFlag;
   final bool isCustomEvent;
-  final double ratingScore;
+  final int ratingScore;
   final bool scoreHomeDisplay;
   final List<Merchant> merchant;
 
@@ -126,14 +124,14 @@ class Result {
             json["genre_ids"].map((x) => GenreId.fromJson(x))),
         duration: json["duration"],
         posterPath: json["poster_path"],
-        ageCategory: json["age_category"],
+        ageCategory: ageCategoryValues.map[json["age_category"]]!,
         trailerPath: json["trailer_path"],
         trailerThumbnailPath: json["trailer_thumbnail_path"],
         producer: json["producer"],
         director: json["director"],
         presaleFlag: json["presale_flag"],
         isCustomEvent: json["is_custom_event"],
-        ratingScore: json["rating_score"]?.toDouble(),
+        ratingScore: json["rating_score"],
         scoreHomeDisplay: json["score_home_display"],
         merchant: List<Merchant>.from(
             json["merchant"].map((x) => Merchant.fromJson(x))),
@@ -149,7 +147,7 @@ class Result {
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x.toJson())),
         "duration": duration,
         "poster_path": posterPath,
-        "age_category": ageCategory,
+        "age_category": ageCategoryValues.reverse[ageCategory],
         "trailer_path": trailerPath,
         "trailer_thumbnail_path": trailerThumbnailPath,
         "producer": producer,
@@ -161,6 +159,15 @@ class Result {
         "merchant": List<dynamic>.from(merchant.map((x) => x.toJson())),
       };
 }
+
+enum AgeCategory { D, P, R, SU }
+
+final ageCategoryValues = EnumValues({
+  "D": AgeCategory.D,
+  "P": AgeCategory.P,
+  "R": AgeCategory.R,
+  "SU": AgeCategory.SU
+});
 
 class GenreId {
   final String id;
@@ -188,7 +195,7 @@ class GenreId {
 
 class Merchant {
   final String merchantId;
-  final String merchantName;
+  final MerchantName merchantName;
 
   Merchant({
     required this.merchantId,
@@ -197,11 +204,31 @@ class Merchant {
 
   factory Merchant.fromJson(Map<String, dynamic> json) => Merchant(
         merchantId: json["merchant_id"],
-        merchantName: json["merchant_name"],
+        merchantName: merchantNameValues.map[json["merchant_name"]]!,
       );
 
   Map<String, dynamic> toJson() => {
         "merchant_id": merchantId,
-        "merchant_name": merchantName,
+        "merchant_name": merchantNameValues.reverse[merchantName],
       };
+}
+
+enum MerchantName { CGV, CINPOLIS, XXI }
+
+final merchantNameValues = EnumValues({
+  "CGV": MerchantName.CGV,
+  "Cinépolis": MerchantName.CINPOLIS,
+  "XXI": MerchantName.XXI
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

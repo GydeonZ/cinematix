@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:praktikum/models/cities_model.dart';
 import 'package:praktikum/models/now_playing_model.dart';
+import 'package:praktikum/models/promo_model.dart';
+import 'package:praktikum/models/upcoming_movie_model.dart';
 import 'package:praktikum/utils/constanst/urls.dart';
 
 class ApiServices {
@@ -13,13 +15,24 @@ class ApiServices {
     _dio.options.headers['Authorization'] = bearerToken;
   }
 
-  Future<NowPlayingMovie> fetchNowPlayingMovie() async {
+  Future<NowPlayingMovie> fetchNowPlayingMovie(String id) async {
     try {
       addBearerToken();
 
-      final response = await _dio.get(NowPlayingUrls.baseUrl);
-
+      final response = await _dio.get('${NowPlayingUrls.baseUrl}$id');
       return nowPlayingMovieFromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<UpcomingMovie> fetchUpcomingMovie(String id) async {
+    try {
+      addBearerToken();
+
+      final response = await _dio.get('${UpcomingMovieUrls.baseUrl}$id');
+
+      return upcomingMovieFromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -31,6 +44,17 @@ class ApiServices {
 
       final response = await _dio.get(CitiesUrls.baseUrl);
       return citiesFromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Promo> fetchPromo() async {
+    try {
+      addBearerToken();
+
+      final response = await _dio.get(PromoUrls.baseUrl);
+      return Promo.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

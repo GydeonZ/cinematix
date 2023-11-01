@@ -12,39 +12,60 @@ class CitiesScreen extends StatefulWidget {
 }
 
 class _CitiesScreenState extends State<CitiesScreen> {
+  late HomeScreenProvider homeprovider;
+  // late FilterCitiesProvider filterCitiesProvider;
+
   @override
   void initState() {
     super.initState();
-    Provider.of<CitiesProvider>(context, listen: false).getCities;
+    homeprovider = Provider.of<HomeScreenProvider>(context, listen: false);
+    homeprovider.getCities();
+    // filterCitiesProvider.searchController.addListener(() {
+    // filterCitiesProvider.filteredCities;
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: TextField(
+          // controller: filterCitiesProvider.searchController,
+          onChanged: (query) {},
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Search cities...',
+            hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Consumer<CitiesProvider>(
+            Consumer<HomeScreenProvider>(
               builder: (context, provider, child) {
                 if (provider.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
-                  return ListView.builder(
+                  return ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: provider.cities!.results.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
+                          homeprovider.getNowPlaying(
+                              provider.cities!.results[index].id);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  HomePage(data: provider.cities!.results[index]),
+                              builder: (context) => HomePage(
+                                  data: provider.cities!.results[index]),
                             ),
                           );
                         },
@@ -60,6 +81,11 @@ class _CitiesScreenState extends State<CitiesScreen> {
                         ),
                       );
                     },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(
+                      color: Colors.grey,
+                      thickness: 2,
+                    ),
                   );
                 }
               },

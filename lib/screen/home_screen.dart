@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:praktikum/models/cities_model.dart';
 import 'package:praktikum/provider/homescreen_provider.dart';
 import 'package:praktikum/screen/cities_screen.dart';
+import 'package:praktikum/screen/movie_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.data});
@@ -15,11 +17,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _current = 0;
+  int _currentIndex = 0;
+  int _currentPromo = 0;
   final CarouselController _controller = CarouselController();
+  late HomeScreenProvider homeprovider;
+  late GetPromoProvider promoProvider;
   @override
   void initState() {
     super.initState();
-    Provider.of<NowPlayingProvider>(context, listen: false).getNowPlaying(); 
+    homeprovider = Provider.of<HomeScreenProvider>(context, listen: false);
+    promoProvider = Provider.of<GetPromoProvider>(context, listen: false);
+    homeprovider.getNowPlaying(widget.data.id);
+    promoProvider.getPromo();
   }
 
   @override
@@ -34,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Consumer<NowPlayingProvider>(
+            Consumer<HomeScreenProvider>(
               builder: (context, provider, child) {
                 if (provider.isLoading) {
                   return const Center(
@@ -48,13 +57,12 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
                                 image: NetworkImage(
                                   provider.nowPlayingMovie!.results[index]
-                                      .posterPath,
+                                      .trailerThumbnailPath,
                                 ),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
@@ -179,7 +187,219 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-            )
+            ),
+            const SizedBox(height: 23),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Sedang Tayang',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          'Lihat Semua',
+                          style: GoogleFonts.inter(
+                            color: const Color(0xFFEA4335),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Consumer<HomeScreenProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      CarouselSlider.builder(
+                        itemCount: provider.nowPlayingMovie!.results.length,
+                        itemBuilder: (context, index, realIndex) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MovieSection(
+                                      data: provider
+                                          .nowPlayingMovie!.results[index]),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 300,
+                              width: 165,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    provider.nowPlayingMovie!.results[index]
+                                        .posterPath,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        options: CarouselOptions(
+                            height: 270,
+                            viewportFraction: 0.5,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: false,
+                            autoPlayInterval: const Duration(seconds: 4),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 250),
+                            // enlargeCenterPage: true,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _currentIndex = index;
+                              });
+                            }),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            // width: 150,
+                            child: Text(
+                              provider.nowPlayingMovie!.results[_currentIndex]
+                                  .title,
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 40),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                child: Text(
+                  'Voucher Deal',
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Consumer<GetPromoProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      CarouselSlider.builder(
+                        itemCount: provider.promo!.results.length,
+                        itemBuilder: (context, index, realIndex) {
+                          return GestureDetector(
+                            onTap: () async {
+                              final url = Uri.parse(provider.promo!.results[index].uri);
+                              launchUrl(url);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    provider.promo!.results[index].imageFile,
+                                  ),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        options: CarouselOptions(
+                            height: 200,
+                            viewportFraction: 1,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 4),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 250),
+                            // enlargeCenterPage: true,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _currentPromo = index;
+                              });
+                            }),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: List.generate(
+                          provider.promo!.results.length,
+                          (i) {
+                            return GestureDetector(
+                              onTap: () {
+                                _controller.animateToPage(i);
+                              },
+                              child: Container(
+                                width: 12.0,
+                                height: 12.0,
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 4.0),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: (Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? const Color(0xff5D5D5D)
+                                          : const Color(0xffEF223B))
+                                      .withOpacity(
+                                    _currentPromo == i ? 0.9 : 0.4,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:praktikum/provider/homescreen_provider.dart';
-import 'package:praktikum/screen/cities_screen.dart';
-import 'package:praktikum/screen/home_screen.dart';
 import 'package:praktikum/screen/splash.dart';
 import 'package:provider/provider.dart';
 
@@ -10,12 +8,15 @@ void main() {
     MultiProvider(
       providers: [
         // Add your providers here
-        ChangeNotifierProvider<NowPlayingProvider>(
-          create: (context) => NowPlayingProvider(),
+        ChangeNotifierProvider<HomeScreenProvider>(
+          create: (context) => HomeScreenProvider(),
         ),
-        ChangeNotifierProvider<CitiesProvider>(
-          create: (context) => CitiesProvider(),
+        ChangeNotifierProvider<GetPromoProvider>(
+          create: (context) => GetPromoProvider(),
         ),
+        // ChangeNotifierProvider<MovieSectionProvider>(
+          // create: (context) => MovieSectionProvider(),
+        // ),
       ],
       child: const App(),
     ),
