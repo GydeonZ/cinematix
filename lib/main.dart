@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:praktikum/provider/homescreen_provider.dart';
-import 'package:praktikum/screen/cities_screen.dart';
-import 'package:praktikum/screen/home_screen.dart';
-import 'package:praktikum/screen/splash.dart';
+import 'package:praktikum/view/screen/splash.dart';
+import 'package:praktikum/viewmodel/fnb_provider.dart';
+import 'package:praktikum/viewmodel/homescreen_provider.dart';
+import 'package:praktikum/viewmodel/movie_section_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'viewmodel/checkout_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         // Add your providers here
-        ChangeNotifierProvider<NowPlayingProvider>(
-          create: (context) => NowPlayingProvider(),
+        ChangeNotifierProvider<HomeScreenProvider>(
+          create: (context) => HomeScreenProvider(),
         ),
-        ChangeNotifierProvider<CitiesProvider>(
-          create: (context) => CitiesProvider(),
+        ChangeNotifierProvider<GetPromoProvider>(
+          create: (context) => GetPromoProvider(),
+        ),
+        ChangeNotifierProvider<MovieSectionProvider>(
+          create: (context) => MovieSectionProvider(),
+        ),
+        ChangeNotifierProvider<FoodAndDrinks>(
+          create: (context) => FoodAndDrinks(),
+        ),
+        ChangeNotifierProvider<GetCartProvider>(
+          create: (context) => GetCartProvider(),
+        ),
+        ChangeNotifierProvider<CalculatePrice>(
+          create: (context) => CalculatePrice(),
         ),
       ],
       child: const App(),
