@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:praktikum/models/cities_model.dart';
-import 'package:praktikum/models/now_playing_model.dart';
-import 'package:praktikum/models/promo_model.dart';
-import 'package:praktikum/services/services.dart';
+import 'package:uts/models/cities_model.dart';
+import 'package:uts/models/now_playing_model.dart';
+import 'package:uts/models/promo_model.dart';
+import 'package:uts/services/services.dart';
 
 class HomeScreenProvider extends ChangeNotifier {
   bool isLoading = true;

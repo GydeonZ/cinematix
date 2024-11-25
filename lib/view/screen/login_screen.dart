@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/view/screen/food_menu.dart';
-import 'package:praktikum/view/screen/sign_up_screen.dart';
-import 'package:praktikum/view/widget/login_signup.dart';
+import 'package:uts/view/screen/food_menu.dart';
+import 'package:uts/view/screen/sign_up_screen.dart';
+import 'package:uts/view/widget/login_signup.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -120,11 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 30),
                   signInSignUpButton(context, true, () {
-                    FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text).then((value) {
-                          Navigator.push(context, MaterialPageRoute(builder: ((context) => const FoodPage())));
-                        });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const FoodPage())));
                   }),
                 ],
               ),

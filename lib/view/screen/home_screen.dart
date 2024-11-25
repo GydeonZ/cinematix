@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/models/cities_model.dart';
-import 'package:praktikum/view/screen/cities_screen.dart';
-import 'package:praktikum/view/screen/food_menu.dart';
-import 'package:praktikum/view/screen/login_screen.dart';
-import 'package:praktikum/view/screen/movie_screen.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uts/models/cities_model.dart';
+import 'package:uts/view/screen/cities_screen.dart';
+import 'package:uts/view/screen/food_menu.dart';
+import 'package:uts/view/screen/login_screen.dart';
+import 'package:uts/view/screen/movie_screen.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.data});
@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   int _current = 0;
   int _currentIndex = 0;
   int _currentPromo = 0;
-  final CarouselController _controller = CarouselController();
   late HomeScreenProvider homeprovider;
   late GetPromoProvider promoProvider;
   @override
@@ -95,9 +94,7 @@ class _HomePageState extends State<HomePage> {
                                         .length,
                                     (i) {
                                       return GestureDetector(
-                                        onTap: () {
-                                          _controller.animateToPage(i);
-                                        },
+                                        onTap: () {},
                                         child: Container(
                                           width: 12.0,
                                           height: 12.0,
@@ -331,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                   return Column(
                     children: [
                       CarouselSlider.builder(
-                        itemCount: provider.promo!.results.length,
+                        itemCount: provider.promo!.results.take(6).length,
                         itemBuilder: (context, index, realIndex) {
                           return GestureDetector(
                             onTap: () async {
@@ -373,12 +370,10 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: List.generate(
-                          provider.promo!.results.length,
+                          provider.promo!.results.take(6).length,
                           (i) {
                             return GestureDetector(
-                              onTap: () {
-                                _controller.animateToPage(i);
-                              },
+                              onTap: () {},
                               child: Container(
                                 width: 12.0,
                                 height: 12.0,

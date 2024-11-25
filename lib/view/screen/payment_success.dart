@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/view/screen/home_screen.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
+import 'package:uts/view/screen/home_screen.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
 import 'package:provider/provider.dart';
 
 class PaymentSuccessPage extends StatefulWidget {
@@ -17,7 +19,9 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Payment Success'),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Payment Success',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -34,16 +38,21 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
               ),
             ),
             const SizedBox(height: 60),
-            Image.asset(
-              'assets/images/foodsuccess.png',
+            SvgPicture.asset(
+              'assets/images/clapperboard 1.svg',
               width: 202,
               height: 202,
             ),
+            // Svgp.asset(
+            //   'assets/images/clapperboard 1.svg',
+            //   width: 202,
+            //   height: 202,
+            // ),
             const SizedBox(height: 60),
             SizedBox(
               width: 300,
               child: Text(
-                textAlign: TextAlign.justify,
+                textAlign: TextAlign.center,
                 'Terima kasih sudah mengorder snack dari kami. Selamat menikmati film dan snack dari kami DWONS dan jangan lupa buang sampah pada tempatnya yaa~',
                 style: GoogleFonts.inter(
                     fontSize: 20, color: const Color(0xff8F8F8F)),
@@ -75,6 +84,7 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
+                        color: Colors.white,
                       ),
                     )),
               );

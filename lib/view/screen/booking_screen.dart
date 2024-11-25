@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/models/now_playing_model.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:uts/models/now_playing_model.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key, required this.movieId});

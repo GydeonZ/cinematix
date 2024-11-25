@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/view/screen/home_screen.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
+import 'package:uts/view/screen/home_screen.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatefulWidget {

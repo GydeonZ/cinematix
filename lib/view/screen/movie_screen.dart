@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/models/now_playing_model.dart';
-import 'package:praktikum/view/screen/booking_screen.dart';
-import 'package:praktikum/view/screen/home_screen.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
-import 'package:praktikum/viewmodel/movie_section_provider.dart';
+import 'package:uts/models/now_playing_model.dart';
+import 'package:uts/view/screen/booking_screen.dart';
+import 'package:uts/view/screen/home_screen.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
+import 'package:uts/viewmodel/movie_section_provider.dart';
 import 'package:provider/provider.dart';
 
 class MovieSection extends StatefulWidget {

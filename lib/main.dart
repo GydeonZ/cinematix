@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:praktikum/view/screen/splash.dart';
-import 'package:praktikum/viewmodel/fnb_provider.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
-import 'package:praktikum/viewmodel/movie_section_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:uts/view/screen/splash.dart';
+import 'package:uts/viewmodel/fnb_provider.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
+import 'package:uts/viewmodel/movie_section_provider.dart';
 
 import 'viewmodel/checkout_provider.dart';
 
@@ -31,13 +31,13 @@ void main() {
           create: (context) => CalculatePrice(),
         ),
       ],
-      child: const App(),
+      child: const MyApp(),
     ),
   );
 }
 
-class App extends StatelessWidget {
-  const App({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

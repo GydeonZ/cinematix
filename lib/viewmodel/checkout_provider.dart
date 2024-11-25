@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:praktikum/models/cart_model.dart';
+import 'package:uts/models/cart_model.dart';
 
 class CalculatePrice extends ChangeNotifier {
   double calculateTotalPrice(List<CartItem> cartItems) {

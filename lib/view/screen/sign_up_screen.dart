@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/view/screen/food_menu.dart';
-import 'package:praktikum/view/screen/login_screen.dart';
-import 'package:praktikum/view/widget/login_signup.dart';
-import 'package:praktikum/viewmodel/homescreen_provider.dart';
+import 'package:uts/view/screen/food_menu.dart';
+import 'package:uts/view/screen/login_screen.dart';
+import 'package:uts/view/widget/login_signup.dart';
+import 'package:uts/viewmodel/homescreen_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -135,19 +133,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Masukkan Password Kamu', true, _passwordTextController),
                   const SizedBox(height: 40),
                   signInSignUpButton(context, false, () {
-                    FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                          email: _emailTextController.text,
-                          password: _passwordTextController.text,
-                        )
-                        .then((value) => {
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(value.user!.uid)
-                              .set({'name' : _userNameTextController.text, 'balance' : 250000})
-                            }).then((value){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FoodPage()));
-                            });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const FoodPage()));
                   })
                 ],
               ),

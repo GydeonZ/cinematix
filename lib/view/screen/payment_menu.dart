@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/models/cart_model.dart';
-import 'package:praktikum/services/services.dart';
-import 'package:praktikum/view/screen/payment_success.dart';
-import 'package:praktikum/viewmodel/checkout_provider.dart';
-import 'package:praktikum/viewmodel/fnb_provider.dart';
+import 'package:uts/models/cart_model.dart';
+import 'package:uts/services/services.dart';
+import 'package:uts/view/screen/payment_success.dart';
+import 'package:uts/viewmodel/checkout_provider.dart';
+import 'package:uts/viewmodel/fnb_provider.dart';
 import 'package:provider/provider.dart';
 
 class PaymentPage extends StatefulWidget {

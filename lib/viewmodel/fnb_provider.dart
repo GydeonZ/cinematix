@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:praktikum/models/cart_model.dart';
-import 'package:praktikum/models/fnb_model.dart';
-import 'package:praktikum/services/services.dart';
+import 'package:uts/models/cart_model.dart';
+import 'package:uts/models/fnb_model.dart';
+import 'package:uts/services/services.dart';
 
 class FoodAndDrinks extends ChangeNotifier {
   bool isLoading = true;

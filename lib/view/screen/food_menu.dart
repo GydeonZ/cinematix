@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:praktikum/models/cart_model.dart';
-import 'package:praktikum/view/screen/payment_menu.dart';
-import 'package:praktikum/viewmodel/fnb_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:uts/models/cart_model.dart';
+import 'package:uts/view/screen/payment_menu.dart';
+import 'package:uts/viewmodel/fnb_provider.dart';
 
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});

@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:praktikum/models/cities_model.dart';
-import 'package:praktikum/models/fnb_model.dart';
-import 'package:praktikum/models/now_playing_model.dart';
-import 'package:praktikum/models/promo_model.dart';
-import 'package:praktikum/models/upcoming_movie_model.dart';
-import 'package:praktikum/utils/constants/urls.dart';
+import 'package:uts/models/cities_model.dart';
+import 'package:uts/models/fnb_model.dart';
+import 'package:uts/models/now_playing_model.dart';
+import 'package:uts/models/promo_model.dart';
+import 'package:uts/models/upcoming_movie_model.dart';
+import 'package:uts/utils/constants/urls.dart';
 
 
 class ApiServices {
@@ -13,7 +13,7 @@ class ApiServices {
   // Method untuk menambahkan token Bearer ke header permintaan
   void addBearerToken() {
     String bearerToken =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiIiLCJ1c2VyX2lkIjoiIiwiYXV0aF9zaWduIjoiMTBmNzExZjEtMDlmMy00OTlmLTg0NTAtZDBlMjU2MjEwZDMyIiwicHVycG9zZSI6Im5vdGxvZ2luIiwiYXVkIjoiVGl4SUQgTWlkZGxld2FyZSIsImV4cCI6MTcwNjg1MTQwMywiaWF0IjoxNjk4MjExNDAzLCJpc3MiOiJUaXhJRCBTZWN1cml0eSBBdXRob3JpdHkiLCJzdWIiOiJNb2JpbGUgYXV0aG9yaXphdGlvbiB0b2tlbiJ9.wrNCvRByB2ILP7rBno14S2HqwN8bFwoWpEmZ_SKbg6I'; // Ganti dengan token Anda
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiIiLCJ1c2VyX2lkIjoiIiwiYXV0aF9zaWduIjoiZTNlODA3YTAtMjEyZC00ODBkLWE4ZGYtYjA2ZTFkYmE2MzhhIiwicHVycG9zZSI6Im5vdGxvZ2luIiwiYXVkIjoiVGl4SUQgTWlkZGxld2FyZSIsImV4cCI6MTc0MDk0MjY4NywiaWF0IjoxNzMyMzAyNjg3LCJpc3MiOiJUaXhJRCBTZWN1cml0eSBBdXRob3JpdHkiLCJzdWIiOiJNb2JpbGUgYXV0aG9yaXphdGlvbiB0b2tlbiJ9.q4GUAgV6ejLMrUPQsb86i2nr5ywhHd8c3AtqtRxGujc'; // Ganti dengan token Anda
     _dio.options.headers['Authorization'] = bearerToken;
   }
 
